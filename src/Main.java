@@ -5,7 +5,9 @@ import Expresions.VarExp;
 import Model.*;
 import Statemnts.*;
 import Types.IntType;
+import Types.StringType;
 import Values.IntValue;
+import Values.StringValue;
 import Values.Value;
 
 
@@ -43,18 +45,33 @@ public class Main {
                 )
         );
     }
+    private static IStmt example4(){
+        return  new CompStmt(new DeclarationStmt("varf", new StringType()), new CompStmt(
+                new AssigStmt("varf", new ValueExp(new StringValue("test.in"))), new CompStmt(
+                new openRFile(new VarExp("varf")), new CompStmt(
+                new DeclarationStmt("varc", new IntType()), new CompStmt(
+                new readFile(new VarExp("varf"), "varc"), new CompStmt(
+                new PrintStmt(new VarExp("varc")), new CompStmt(
+                new readFile(new VarExp("varf"), "varc"), new CompStmt(
+                new PrintStmt(new VarExp("varc")), new closeRFile(new VarExp("varf"))))))))));
+    }
     public static void main(String[] args) {
-        MyIStack<IStmt> stk = new MyStack<>();
-        MyIDictionary<String, Value> symtbl = new MyDictionary<>();
-        MyIList<Value> out = new MyList<>();
-        PrgState state = new PrgState(stk, symtbl, out, example2());
-        IRepository repo = new MyRepository(state);
-
-        Controller ctrl = new Controller(repo);
-        //ctrl.allSteps(state);
-        //repo.output();
-        View view = new View(ctrl, repo, state);
-        view.start();
+//        MyIStack<IStmt> stk = new MyStack<>();
+//        MyIDictionary<String, Value> symtbl = new MyDictionary<>();
+//        MyIList<Value> out = new MyList<>();
+//
+//        //PrgState state = new PrgState(stk, symtbl, out, example2());
+//
+//        IRepository repo = new MyRepository();
+//        repo.addState(state);
+//
+//        Controller ctrl = new Controller(repo);
+//
+//
+//
+//
+//        View view = new View(ctrl, repo, state);
+//        view.start();
 
     }
 }

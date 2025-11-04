@@ -1,6 +1,6 @@
 import Exceptions.InvalidChoiceException;
 import Model.Controller;
-import Model.IRepository;
+import Repsitory.IRepository;
 import Model.PrgState;
 
 import java.util.Scanner;
@@ -15,7 +15,8 @@ public class View {
         this.state = state;
     }
     public void oneStep(){
-      state = controller.OneStep(this.state);
+        state = controller.OneStep(this.state);
+
     }
     public void allSteps(){
         controller.allSteps(this.state);

@@ -17,8 +17,10 @@ public class DeclarationStmt implements IStmt {
             Value def;
             if (type.equals(new Types.IntType())) {
                 def = new Values.IntValue(0);
-            } else {
+            } else if(type.equals(new Types.BoolType())){
                 def = new Values.BoolValue(false);
+            } else{
+                def = new Values.StringValue("");
             }
             state.getSymTable().update(id, def);
         }

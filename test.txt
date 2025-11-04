@@ -1,0 +1,20 @@
+ExeStack=[int v | v=2;Print(v)]
+SymTable={}
+Out=[]
+
+ExeStack=[v=2;Print(v)]
+SymTable={v=0}
+Out=[]
+
+ExeStack=[v=2 | Print(v)]
+SymTable={v=0}
+Out=[]
+
+ExeStack=[Print(v)]
+SymTable={v=2}
+Out=[]
+
+ExeStack=[]
+SymTable={v=2}
+Out=[2]
+

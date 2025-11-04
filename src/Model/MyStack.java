@@ -31,7 +31,15 @@ public class MyStack<T> implements MyIStack<T>{
         stack.push(item);
     }
     @Override
-    public String toString(){
-        return stack.toString();
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+        var it = stack.iterator(); // top -> bottom if you use push/pop on ArrayDeque
+        while (it.hasNext()) {
+            sb.append(it.next());       // each element's own toString()
+            if (it.hasNext()) sb.append(" | "); // <-- frame boundary
+        }
+        sb.append("]");
+        return sb.toString();
     }
+
 }

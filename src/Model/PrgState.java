@@ -8,18 +8,21 @@ public class PrgState {
     private final MyIDictionary<String, Value> symTable; // ("c", 10), ("b", true)
     private final MyIList<Value> out;
     private final IStmt originalProgram;
+    private final MyIFileTable fileTable;
 
-    public PrgState(MyIStack<IStmt> exeStack, MyIDictionary<String, Value> symTable, MyIList<Value> outList, IStmt originalProgram) {
+    public PrgState(MyIStack<IStmt> exeStack, MyIDictionary<String, Value> symTable, MyIList<Value> outList, IStmt originalProgram, MyIFileTable fileTable) {
         this.exeStack = exeStack;
         this.symTable = symTable;
         this.out = outList;
         this.originalProgram = originalProgram;
+        this.fileTable = fileTable;
         exeStack.push(originalProgram);
     }
     public MyIStack<IStmt> getStk(){ return exeStack; }
     public MyIDictionary<String, Value> getSymTable(){ return symTable; }
     public MyIList<Value> getOut(){ return out; }
     public IStmt getOriginalProgram(){ return originalProgram; }
+    public MyIFileTable getFileTable(){ return fileTable; }
 
     @Override public String toString(){
         return "ExeStack=" + exeStack + System.lineSeparator() +

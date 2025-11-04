@@ -1,33 +1,44 @@
 package Model;
 
 import Exceptions.StackEmptyException;
+import Repsitory.IRepository;
 import Statemnts.IStmt;
 
 public class Controller {
     private final IRepository repository;
+
     public Controller(IRepository repository){
         this.repository = repository;
     }
 
-
+    // Execute exactly one step
     public PrgState OneStep(PrgState state){
-       MyIStack stack = state.getStk();
-       if(stack.isEmpty()) {
-           System.out.println("Program output: " + state.getOut());
-           throw new StackEmptyException();
-       }
-        IStmt stmt = (IStmt) stack.pop();
-        repository.output();
-        return stmt.execute(state);
+        MyIStack<IStmt> stack = state.getStk();
+        if (stack.isEmpty()) {
+
+            throw new StackEmptyException();
+        }
+        IStmt stmt = stack.pop();
+
+        stmt.execute(state);
+        return state;
     }
 
 
     public void allSteps(PrgState state){
-        repository.output();
-        while(!state.getStk().isEmpty()){
+
+        while (!state.getStk().isEmpty()) {
             state = OneStep(state);
-            repository.output();
+            logSafe();                // post-state only
         }
-        System.out.println("Program output: " + state.getOut());
     }
+
+    private void logSafe() {
+        try {
+            repository.logPrgState();
+        } catch (RuntimeException e1) {
+            throw new RuntimeException("Logging failed", e1);
+        }
+    }
+
 }
