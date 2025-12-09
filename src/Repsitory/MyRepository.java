@@ -1,5 +1,6 @@
 package Repsitory;
 
+import Exceptions.MyException;
 import Model.MyIStack;
 import Model.PrgState;
 import Statemnts.IStmt;
@@ -23,7 +24,7 @@ public class MyRepository implements IRepository {
         try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, false)))) {
             // nothing to write; opening with append=false truncates the file
         } catch (IOException e) {
-            throw new RuntimeException("Cannot initialize log file: " + e.getMessage(), e);
+            throw new MyException("Cannot initialize log file: " + e.getMessage());
         }
     }
     @Override
@@ -49,7 +50,7 @@ public class MyRepository implements IRepository {
 
             log.println(prg.toString());
         } catch (IOException e) {
-            throw new RuntimeException("I/O while logging: " + e.getMessage(), e);
+            throw new MyException("I/O while logging: " + e.getMessage());
         }
     }
 }

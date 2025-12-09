@@ -1,5 +1,8 @@
 package Types;
 
+import Values.BoolValue;
+import Values.Value;
+
 public class BoolType implements Type {
 
     @Override
@@ -9,5 +12,9 @@ public class BoolType implements Type {
     @Override
     public String toString(){
         return "bool";
+    }
+    @Override
+    public Value defaultValue() {
+        return new BoolValue(false);
     }
 }

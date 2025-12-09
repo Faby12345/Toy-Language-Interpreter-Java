@@ -2,10 +2,12 @@ package Statemnts;
 
 import Exceptions.MyException;
 import Expresions.Exp;
+import Model.MyIDictionary;
 import Model.MyIFileTable;
 import Model.PrgState;
 import Types.IntType;
 import Types.StringType;
+import Types.Type;
 import Values.IntValue;
 import Values.StringValue;
 import Values.Value;
@@ -26,7 +28,7 @@ public class readFile implements IStmt{
             throw new MyException("readFile: var not int: " + varName);
 
         // exp to string
-        Value v = exp.eval(state.getSymTable());
+        Value v = exp.eval(state.getSymTable(), state.getHeap());
         if(!(v.getType() instanceof StringType))
             throw new MyException("readFile: exp not string");
         StringValue sv = (StringValue) v;
@@ -48,5 +50,22 @@ public class readFile implements IStmt{
         }
         return state;
     }
+    @Override
+    public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {
+
+        Type typeExp = exp.typeCheck(typeEnv);
+        if (!typeExp.equals(new StringType())) {
+            throw new MyException("ReadFile: file name expression must be of type string");
+        }
+
+
+        Type typeVar = typeEnv.lookup(varName);
+        if (!typeVar.equals(new IntType())) {
+            throw new MyException("ReadFile: variable " + varName + " must be of type int");
+        }
+
+        return typeEnv;
+    }
+
     @Override public String toString(){ return "readFile("+exp+","+varName+")"; }
 }

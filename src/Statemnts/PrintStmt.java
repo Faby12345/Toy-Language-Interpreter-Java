@@ -1,7 +1,9 @@
 package Statemnts;
 
 import Expresions.Exp;
+import Model.MyIDictionary;
 import Model.PrgState;
+import Types.Type;
 import Values.Value;
 
 public class PrintStmt implements IStmt {
@@ -11,11 +13,16 @@ public class PrintStmt implements IStmt {
     }
     @Override
     public PrgState execute(PrgState state){
-        Value value = exp.eval(state.getSymTable());
+        Value value = exp.eval(state.getSymTable(), state.getHeap());
         state.getOut().add(value);
         return state;
     }
-    @Override
+    public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {
+        exp.typeCheck(typeEnv);
+        return typeEnv;
+    }
+
+        @Override
     public String toString(){
         return "Print(" + exp + ")";
     }

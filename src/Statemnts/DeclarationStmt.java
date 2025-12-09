@@ -1,5 +1,7 @@
 package Statemnts;
 
+import Exceptions.MyException;
+import Model.MyIDictionary;
 import Model.PrgState;
 import Types.Type;
 import Values.Value;
@@ -13,21 +15,19 @@ public class DeclarationStmt implements IStmt {
     }
     @Override
     public PrgState execute(PrgState state){
-        if(!state.getSymTable().isDefined(id)) {
-            Value def;
-            if (type.equals(new Types.IntType())) {
-                def = new Values.IntValue(0);
-            } else if(type.equals(new Types.BoolType())){
-                def = new Values.BoolValue(false);
-            } else{
-                def = new Values.StringValue("");
-            }
+        if (!state.getSymTable().isDefined(id)) {
+            Value def = type.defaultValue();      // 🔥 single line
             state.getSymTable().update(id, def);
-        }
-        else throw new RuntimeException("the variable " + id + " was already declared");
+        } else
+            throw new MyException("the variable " + id + " was already declared");
 
         return state;
     }
+    public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {
+        typeEnv.update(id, type);
+        return typeEnv;
+    }
+
     @Override
     public String toString(){
         return type.toString() + " " + id;

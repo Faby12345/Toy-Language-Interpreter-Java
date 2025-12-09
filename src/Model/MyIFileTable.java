@@ -11,4 +11,5 @@ public interface MyIFileTable {
     BufferedReader get(StringValue key);
     void remove(StringValue key);
     Map<StringValue, BufferedReader> getContent();
+    String toString();
 }

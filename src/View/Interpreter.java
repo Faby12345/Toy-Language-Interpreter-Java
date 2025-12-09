@@ -1,14 +1,12 @@
 package View;
 
-import Expresions.ValueExp;
-import Expresions.VarExp;
+import Exceptions.MyException;
+import Expresions.*;
 import Model.*;
 import Repsitory.IRepository;
 import Repsitory.MyRepository;
 import Statemnts.*;
-import Types.BoolType;
-import Types.IntType;
-import Types.StringType;
+import Types.*;
 import Values.BoolValue;
 import Values.IntValue;
 import Values.StringValue;
@@ -16,15 +14,21 @@ import Values.Value;
 
 public class Interpreter {
     public static void main(String[] args) {
-
         IStmt ex1 = example1();
         IStmt ex2 = example2();
         IStmt ex3 = exampleFiles();
-
+        IStmt ex4 = exampleHeapReadNested();
+        IStmt ex5 = exampleHeapWrite();
+        IStmt ex6 = exampleHeapGC();
+        IStmt ex7 = exWhile();
 
         RunBundle b1 = bundle(ex1);
         RunBundle b2 = bundle(ex2);
         RunBundle b3 = bundle(ex3);
+        RunBundle b4 = bundle(ex4);
+        RunBundle b5 = bundle(ex5);
+        RunBundle b6 = bundle(ex6);
+        RunBundle b7 = bundle(ex7);
 
 
         TextMenu menu = new TextMenu();
@@ -32,21 +36,35 @@ public class Interpreter {
         menu.addCommand(new RunExample("1", ex1.toString(), b1.controller, b1.state));
         menu.addCommand(new RunExample("2", ex2.toString(), b2.controller, b2.state));
         menu.addCommand(new RunExample("3", ex3.toString(), b3.controller, b3.state));
+        menu.addCommand(new RunExample("4", ex4.toString(), b4.controller, b4.state));
+        menu.addCommand(new RunExample("5", ex5.toString(), b5.controller, b5.state));
+        menu.addCommand(new RunExample("6", ex6.toString(), b6.controller, b6.state));
+        menu.addCommand(new RunExample("7", ex7.toString(), b7.controller, b7.state));
         menu.show();
     }
-
-
 
     private record RunBundle(Controller controller, PrgState state) {}
 
 
     private static RunBundle bundle(IStmt program) {
+
+        try {
+            MyIDictionary<String, Type> typeEnv = new MyDictionary<>();
+            program.typeCheck(typeEnv);
+        } catch (MyException e) {
+            System.out.println("Type error in program:");
+            System.out.println(program.toString());
+            System.out.println("-> " + e.getMessage());
+            throw e;
+        }
+
         MyIStack<IStmt> stk = new MyStack<>();
         MyIDictionary<String, Value> sym = new MyDictionary<>();
         MyIList<Value> out = new MyList<>();
         MyIFileTable fileTable = new MyFileTable();
+        MyIHeap heap = new MyHeap();
 
-        PrgState state = new PrgState(stk, sym, out, program, fileTable);
+        PrgState state = new PrgState(stk, sym, out, program, fileTable, heap);
 
         IRepository repo = new MyRepository();
         repo.addState(state);
@@ -54,6 +72,144 @@ public class Interpreter {
         Controller controller = new Controller(repo);
         return new RunBundle(controller, state);
     }
+
+    // Ref int v; new(v,20);
+// print(rH(v)); wH(v,30);
+// print(rH(v)+5);
+    private static IStmt exampleHeapWrite() {
+        return new CompStmt(
+                // Ref int v;
+                new DeclarationStmt("v", new RefType(new IntType())),
+                new CompStmt(
+                        // new(v,20);
+                        new HeapAlloc("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(
+                                // print(rH(v));
+                                new PrintStmt(new HeapRead(new VarExp("v"))),
+                                new CompStmt(
+                                        // wH(v,30);
+                                        new HeapWrite("v", new ValueExp(new IntValue(30))),
+                                        // print(rH(v)+5);
+                                        new PrintStmt(
+                                                new ArithExp(
+                                                        1,
+                                                        new HeapRead(new VarExp("v")),
+                                                        new ValueExp(new IntValue(5))
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+    // Ref int v; new(v,20);
+// Ref Ref int a; new(a,v);
+// new(v,30);
+// print(rH(rH(a)));
+    private static IStmt exampleHeapGC() {
+        return new CompStmt(
+                // Ref int v;
+                new DeclarationStmt("v", new RefType(new IntType())),
+                new CompStmt(
+                        // new(v,20);
+                        new HeapAlloc("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(
+                                // Ref Ref int a;
+                                new DeclarationStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompStmt(
+                                        // new(a, v);
+                                        new HeapAlloc("a", new VarExp("v")),
+                                        new CompStmt(
+                                                // new(v,30);
+                                                new HeapAlloc("v", new ValueExp(new IntValue(30))),
+                                                // print(rH(rH(a)));
+                                                new PrintStmt(
+                                                        new HeapRead(
+                                                                new HeapRead(
+                                                                        new VarExp("a")
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+
+    // Ref int v; new(v,20);
+// Ref Ref int a; new(a,v);
+// print(rH(v)); print(rH(rH(a))+5);
+    private static IStmt exampleHeapReadNested() {
+        return new CompStmt(
+                // Ref int v;
+                new DeclarationStmt("v", new RefType(new IntType())),
+                new CompStmt(
+                        // new(v,20);
+                        new HeapAlloc("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(
+                                // Ref Ref int a;
+                                new DeclarationStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompStmt(
+                                        // new(a, v);
+                                        new HeapAlloc("a", new VarExp("v")),
+                                        new CompStmt(
+                                                // print(rH(v));
+                                                new PrintStmt(new HeapRead(new VarExp("v"))),
+                                                // print(rH(rH(a)) + 5);
+                                                new PrintStmt(
+                                                        new ArithExp(
+                                                                1,
+                                                                new HeapRead(
+                                                                        new HeapRead(
+                                                                                new VarExp("a")
+                                                                        )
+                                                                ),
+                                                                new ValueExp(new IntValue(5))
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    private static IStmt exWhile() {
+        return new CompStmt(
+                new DeclarationStmt("v", new IntType()),
+                new CompStmt(
+                        new AssigStmt("v", new ValueExp(new IntValue(4))),
+                        new CompStmt(
+                                new WhileStmt(
+                                        // while (v > 0)
+                                        new RelationalExp(
+                                                ">",
+                                                new VarExp("v"),
+                                                new ValueExp(new IntValue(0))
+                                        ),
+                                        // body: { print(v); v = v - 1; }
+                                        new CompStmt(
+                                                new PrintStmt(new VarExp("v")),
+                                                new AssigStmt(
+                                                        "v",
+                                                        new ArithExp(
+                                                                2,
+                                                                new VarExp("v"),
+                                                                new ValueExp(new IntValue(1))
+                                                        )
+                                                )
+                                        )
+                                ),
+
+                                new PrintStmt(new VarExp("v"))
+                        )
+                )
+        );
+    }
+
+
 
     // int v; v=2; print(v)
     private static IStmt example1() {

@@ -13,4 +13,5 @@ public class MyFileTable implements MyIFileTable {
     @Override public BufferedReader get(StringValue key){ return map.get(key); }
     @Override public void remove(StringValue key){ map.remove(key); }
     @Override public Map<StringValue, BufferedReader> getContent(){ return map; }
+    @Override public String toString(){ return map.toString(); }
 }

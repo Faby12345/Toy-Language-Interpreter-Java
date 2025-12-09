@@ -27,4 +27,12 @@ public class MyDictionary<String, V> implements MyIDictionary<String,V> {
     public java.lang.String toString() {
         return dictionary.toString();
     }
+    @Override
+    public MyIDictionary<String, V> deepCopy() {
+        MyDictionary<String, V> newDict = new MyDictionary<>();
+        for (String key : dictionary.keySet()) {
+            newDict.update(key, dictionary.get(key));
+        }
+        return newDict;
+    }
 }

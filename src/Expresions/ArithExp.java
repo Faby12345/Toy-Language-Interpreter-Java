@@ -1,6 +1,10 @@
 package Expresions;
 
+import Exceptions.MyException;
 import Model.MyIDictionary;
+import Model.MyIHeap;
+import Types.IntType;
+import Types.Type;
 import Values.IntValue;
 import Values.Value;
 
@@ -13,11 +17,11 @@ public class ArithExp implements Exp{
         this.op = op;
     }
     @Override
-    public Value eval(MyIDictionary<String, Value> symTable){
+    public Value eval(MyIDictionary<String, Value> symTable, MyIHeap heap){
         Value v1,v2;
-        v1 = e1.eval(symTable);
+        v1 = e1.eval(symTable, heap);
         if(v1.getType().equals(new Types.IntType())){
-            v2 = e2.eval(symTable);
+            v2 = e2.eval(symTable, heap);
             if(v2.getType().equals(new Types.IntType())){
                 IntValue i1 = (IntValue) v1;
                 IntValue i2 = (IntValue) v2;
@@ -29,16 +33,16 @@ public class ArithExp implements Exp{
                         if(i2.getValue() != 0)
                             return new IntValue(i1.getValue() / i2.getValue());
                         else
-                            throw new RuntimeException("division by zero is not allowed");
-                    default: throw new RuntimeException("invalid operator");
+                            throw new MyException("division by zero is not allowed");
+                    default: throw new MyException("invalid operator");
                 }
             }
             else {
-                throw new RuntimeException("The second operand is not an integer");
+                throw new MyException("The second operand is not an integer");
             }
         }
         else {
-            throw new RuntimeException("The first operand is not an integer");
+            throw new MyException("The first operand is not an integer");
         }
     }
     private String TranslateOpForPrint(){
@@ -47,6 +51,23 @@ public class ArithExp implements Exp{
         else if (op == 3) return "*";
         else if (op == 4) return "/";
         else return "invalid operator";
+    }
+    public Types.Type typeCheck(MyIDictionary<String, Types.Type> typeEnv){
+       Type t1, t2;
+       t1 = e1.typeCheck(typeEnv);
+       t2 = e2.typeCheck(typeEnv);
+       if(t1.equals(new IntType())){
+           if(t2.equals(new IntType())){
+               return new IntType();
+           }
+           else{
+               throw new MyException("The second operand is not an integer");
+           }
+       }
+       else{
+           throw new MyException("The first operand is not an integer");
+       }
+
     }
     @Override
     public String toString(){
