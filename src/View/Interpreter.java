@@ -225,7 +225,7 @@ public class Interpreter {
     // bool a; int v; a=true; If a Then v=2 Else v=3; print(v)
     private static IStmt example2() {
         return new CompStmt(
-                new DeclarationStmt("a", new BoolType()),
+                new DeclarationStmt("a", new IntType()),
                 new CompStmt(
                         new DeclarationStmt("v", new IntType()),
                         new CompStmt(
