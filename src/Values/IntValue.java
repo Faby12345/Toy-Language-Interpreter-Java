@@ -21,4 +21,8 @@ public class IntValue implements Value {
         return "" + value;
     }
 
+    public Value deepCopy(){
+        return new IntValue(value);
+    }
+
 }

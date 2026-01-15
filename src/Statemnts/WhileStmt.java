@@ -40,7 +40,7 @@ public class WhileStmt implements IStmt {
             stack.push(statement);
         }
 
-        return state;
+        return null;
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

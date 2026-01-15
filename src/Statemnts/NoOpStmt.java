@@ -11,7 +11,7 @@ public class NoOpStmt implements IStmt{
     }
     @Override
     public PrgState execute(PrgState state){
-        return state;
+        return null;
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

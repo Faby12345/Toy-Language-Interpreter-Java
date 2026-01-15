@@ -21,6 +21,7 @@ public class Interpreter {
         IStmt ex5 = exampleHeapWrite();
         IStmt ex6 = exampleHeapGC();
         IStmt ex7 = exWhile();
+        IStmt ex8 = exampleConcurrent();
 
         RunBundle b1 = bundle(ex1);
         RunBundle b2 = bundle(ex2);
@@ -29,6 +30,7 @@ public class Interpreter {
         RunBundle b5 = bundle(ex5);
         RunBundle b6 = bundle(ex6);
         RunBundle b7 = bundle(ex7);
+        RunBundle b8 = bundle(ex8);
 
 
         TextMenu menu = new TextMenu();
@@ -40,6 +42,7 @@ public class Interpreter {
         menu.addCommand(new RunExample("5", ex5.toString(), b5.controller, b5.state));
         menu.addCommand(new RunExample("6", ex6.toString(), b6.controller, b6.state));
         menu.addCommand(new RunExample("7", ex7.toString(), b7.controller, b7.state));
+        menu.addCommand(new RunExample("8", ex8.toString(), b8.controller, b8.state));
         menu.show();
     }
 
@@ -64,14 +67,53 @@ public class Interpreter {
         MyIFileTable fileTable = new MyFileTable();
         MyIHeap heap = new MyHeap();
 
-        PrgState state = new PrgState(stk, sym, out, program, fileTable, heap);
 
+        PrgState state = new PrgState(stk, sym, out, fileTable, heap, program);
         IRepository repo = new MyRepository();
         repo.addState(state);
 
         Controller controller = new Controller(repo);
         return new RunBundle(controller, state);
     }
+
+    // Ref int v; Ref int a; v=10; new(a,22);
+// fork(wH(a,30); v=32; print(v); print(rH(a)));
+// print(v); print(rH(a))
+    private static IStmt exampleConcurrent() {
+        return new CompStmt(
+                new DeclarationStmt("v", new IntType()),
+                new CompStmt(
+                        new DeclarationStmt("a", new RefType(new IntType())),
+                        new CompStmt(
+                                new AssigStmt("v", new ValueExp(new IntValue(10))),
+                                new CompStmt(
+                                        new HeapAlloc("a", new ValueExp(new IntValue(22))),
+                                        new CompStmt(
+                                                // --- FORK STATEMENT ---
+                                                new ForkStmt(new CompStmt(
+                                                        new HeapWrite("a", new ValueExp(new IntValue(30))),
+                                                        new CompStmt(
+                                                                new AssigStmt("v", new ValueExp(new IntValue(32))),
+                                                                new CompStmt(
+                                                                        new PrintStmt(new VarExp("v")),
+                                                                        new PrintStmt(new HeapRead(new VarExp("a")))
+                                                                )
+                                                        )
+                                                )),
+                                                // --- PARENT THREAD CODE ---
+                                                new CompStmt(
+                                                        new PrintStmt(new VarExp("v")),
+                                                        new PrintStmt(new HeapRead(new VarExp("a")))
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+
+
 
     // Ref int v; new(v,20);
 // print(rH(v)); wH(v,30);
@@ -225,7 +267,7 @@ public class Interpreter {
     // bool a; int v; a=true; If a Then v=2 Else v=3; print(v)
     private static IStmt example2() {
         return new CompStmt(
-                new DeclarationStmt("a", new IntType()),
+                new DeclarationStmt("a", new BoolType()),
                 new CompStmt(
                         new DeclarationStmt("v", new IntType()),
                         new CompStmt(

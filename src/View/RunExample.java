@@ -21,10 +21,13 @@ public class RunExample extends Command{
             return;
         }
         try {
-            controller.allSteps(state);
+            controller.allStep();
             ran = true;
         } catch (RuntimeException e) {
             System.out.println("Error: " + e.getMessage());
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

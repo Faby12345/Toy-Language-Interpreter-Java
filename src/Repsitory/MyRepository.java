@@ -1,56 +1,61 @@
 package Repsitory;
 
 import Exceptions.MyException;
-import Model.MyIStack;
 import Model.PrgState;
-import Statemnts.IStmt;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class MyRepository implements IRepository {
-    private int currentIndex = -1;
-    private List<PrgState> list = new ArrayList<>();
-    private String filePath;
-    public MyRepository(){
-        //System.out.print("Log file path: ");
-        //this.filePath = new Scanner(System.in).nextLine().trim();
-        this.filePath = "test.txt";
-        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filePath, false)))) {
-            // nothing to write; opening with append=false truncates the file
+    private List<PrgState> myList; // The list of all running threads (PrgStates)
+    private String logFilePath;
+
+    public MyRepository() {
+        this.myList = new ArrayList<>();
+        this.logFilePath = "test.txt";
+        // clear the log file at the start of execution
+        emptyLogFile();
+    }
+
+    // Helper method to clear the file initially
+    public void emptyLogFile() {
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, false)))) {
+            // Opening with append=false clears the file content
         } catch (IOException e) {
-            throw new MyException("Cannot initialize log file: " + e.getMessage());
+            // It's not critical if we can't clear it, but good to report
+            System.out.println("Could not clear log file: " + e.getMessage());
         }
     }
+
     @Override
     public void addState(PrgState state) {
-        this.list.add(state);
-        currentIndex++;
-    }
-    @Override
-    public PrgState getState() {
-        return this.list.get(currentIndex);
+        this.myList.add(state);
     }
 
+    // [cite: 13] Return the list of program states
     @Override
-    public void output() {
-        for(PrgState state : this.list) {
-            System.out.println(state);
-        }
+    public List<PrgState> getPrgList() {
+        return this.myList;
     }
-    @Override
-    public void logPrgState(){
-        PrgState prg = getState();
-        try (PrintWriter log = new PrintWriter(new BufferedWriter(new FileWriter(filePath, true)))) {
 
-            log.println(prg.toString());
+    //  Replace the repository's list with the new one from Controller
+    @Override
+    public void setPrgList(List<PrgState> list) {
+        this.myList = list;
+    }
+
+    //  Log a specific PrgState to the file
+    @Override
+    public void logPrgState(PrgState prgState) throws MyException {
+        // We use try-with-resources to ensure the file is closed automatically.
+        // append=true is CRITICAL so we don't overwrite previous logs.
+        try (PrintWriter log = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
+            log.println(prgState.toString());
         } catch (IOException e) {
-            throw new MyException("I/O while logging: " + e.getMessage());
+            throw new MyException("File error: " + e.getMessage());
         }
     }
 }

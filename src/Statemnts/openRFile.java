@@ -32,7 +32,8 @@ public class openRFile implements IStmt{
         } catch (IOException e) {
             throw new MyException("openRFile I/O: " + e.getMessage());
         }
-        return state;
+        return null;
+
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

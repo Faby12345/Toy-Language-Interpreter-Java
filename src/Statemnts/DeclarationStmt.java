@@ -21,7 +21,8 @@ public class DeclarationStmt implements IStmt {
         } else
             throw new MyException("the variable " + id + " was already declared");
 
-        return state;
+        return null;
+
     }
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {
         typeEnv.update(id, type);

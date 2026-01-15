@@ -33,7 +33,7 @@ public class closeRFile implements IStmt{
             throw new MyException("closeRFile I/O: " + e.getMessage());
         }
         ft.remove(sv);
-        return state;
+        return null;
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

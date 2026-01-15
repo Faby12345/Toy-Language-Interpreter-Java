@@ -15,7 +15,7 @@ public class PrintStmt implements IStmt {
     public PrgState execute(PrgState state){
         Value value = exp.eval(state.getSymTable(), state.getHeap());
         state.getOut().add(value);
-        return state;
+        return null;
     }
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {
         exp.typeCheck(typeEnv);

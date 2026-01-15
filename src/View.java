@@ -15,11 +15,16 @@ public class View {
         this.state = state;
     }
     public void oneStep(){
-        state = controller.OneStep(this.state);
+        state = state.oneStep();
 
     }
     public void allSteps(){
-        controller.allSteps(this.state);
+        try{
+            controller.allStep();
+        } catch (InterruptedException e){
+            System.out.println("Program interrupted");
+        }
+
     }
     public void start(){
         Scanner scanner = new Scanner(System.in);

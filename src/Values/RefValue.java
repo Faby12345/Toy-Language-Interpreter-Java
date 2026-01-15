@@ -27,6 +27,9 @@ public class RefValue implements Value {
         // valoarea are tipul Ref(locationType)
         return new RefType(locationType);
     }
+    public Value deepCopy(){
+        return new RefValue(address, locationType);
+    }
 
     @Override
     public String toString() {

@@ -47,7 +47,8 @@ public class HeapAlloc implements IStmt{
         }
         int newAddress = prg_heap.allocate(evaluated);
         symTable.update(varName, new RefValue(newAddress, innerType));
-        return prg;
+        return null;
+
     }
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv){
         Type typeExp = expression.typeCheck(typeEnv);

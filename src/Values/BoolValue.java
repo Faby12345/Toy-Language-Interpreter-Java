@@ -19,4 +19,8 @@ public class BoolValue implements Value{
     public String toString() {
         return "" + value;
     }
+
+    public Value deepCopy(){
+        return new BoolValue(value);
+    }
 }

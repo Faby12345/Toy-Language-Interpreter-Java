@@ -32,7 +32,7 @@ public class AssigStmt implements IStmt {
 
         } else throw new MyException("the used variable " + id + " was not declared before");
 
-        return state;
+        return null;
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

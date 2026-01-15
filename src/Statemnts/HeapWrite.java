@@ -67,7 +67,8 @@ public class HeapWrite implements IStmt{
 
         heap.update(addr, evaluated);
 
-        return state;
+        return null;
+
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

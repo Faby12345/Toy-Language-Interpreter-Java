@@ -48,7 +48,7 @@ public class readFile implements IStmt{
         } catch (NumberFormatException nfe) {
             throw new MyException("readFile: non-integer line in file.");
         }
-        return state;
+        return null;
     }
     @Override
     public MyIDictionary<String, Type> typeCheck(MyIDictionary<String, Type> typeEnv) {

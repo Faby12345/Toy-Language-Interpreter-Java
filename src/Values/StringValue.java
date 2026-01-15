@@ -20,5 +20,8 @@ public class StringValue implements Value{
         return value;
     }
 
-
+    @Override
+    public Value deepCopy() {
+        return new StringValue(value);
+    }
 }
