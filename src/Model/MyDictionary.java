@@ -35,4 +35,8 @@ public class MyDictionary<String, V> implements MyIDictionary<String,V> {
         }
         return newDict;
     }
+    @Override
+    public Map<String, V> getContent() {
+        return dictionary;
+    }
 }

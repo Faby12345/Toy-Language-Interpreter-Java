@@ -1,5 +1,5 @@
 import Exceptions.InvalidChoiceException;
-import Model.Controller;
+import Controller.Controller;
 import Repsitory.IRepository;
 import Model.PrgState;
 

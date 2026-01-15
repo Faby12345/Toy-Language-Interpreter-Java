@@ -1,6 +1,6 @@
 package View;
 
-import Model.Controller;
+import Controller.Controller;
 import Model.PrgState;
 
 public class RunExample extends Command{

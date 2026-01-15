@@ -10,4 +10,5 @@ public interface MyIDictionary <String,V>{
     Map<String, V> getMap();
     java.lang.String toString();
     MyIDictionary<String, V> deepCopy();
+    Map<String, V> getContent();
 }

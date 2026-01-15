@@ -1,6 +1,7 @@
-package Model;
+package Controller;
 
 import Exceptions.MyException;
+import Model.PrgState;
 import Repsitory.IRepository;
 import Values.RefValue;
 import Values.Value;
@@ -11,28 +12,55 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Controller {
     private final IRepository repository;
-    private ExecutorService executor; // Ref: Lab 8, Step 12 [cite: 77]
+    private ExecutorService executor;
 
     public Controller(IRepository repository) {
         this.repository = repository;
     }
 
+    // --- NEW METHOD FOR GUI: Returns the repository so GUI can read data ---
+    public IRepository getRepo() {
+        return repository;
+    }
 
+    // --- NEW METHOD FOR GUI: Executes exactly ONE step when button is clicked ---
+    public void oneStep() throws InterruptedException {
+        executor = Executors.newFixedThreadPool(2);
+        List<PrgState> prgList = removeCompletedPrg(repository.getPrgList());
 
-    private List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
+        if (prgList.size() > 0) {
+            // Garbage Collection
+            prgList.get(0).getHeap().setMap(
+                    safeGarbageCollector(
+                            getAddrFromAllSymTables(prgList),
+                            prgList.get(0).getHeap().getMap()
+                    )
+            );
+
+            // Execute one step
+            oneStepForAllPrg(prgList);
+
+            // Remove completed programs
+            prgList = removeCompletedPrg(repository.getPrgList());
+        }
+
+        executor.shutdownNow();
+        repository.setPrgList(prgList);
+    }
+
+    // --- EXISTING METHODS ---
+
+    public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
         return inPrgList.stream()
                 .filter(p -> p.isNotCompleted())
                 .collect(Collectors.toList());
     }
 
-
-    // Executes one step for EVERY program in the list concurrently
-    private void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
-
+    public void oneStepForAllPrg(List<PrgState> prgList) throws InterruptedException {
+        // Log before execution
         prgList.forEach(prg -> {
             try {
                 repository.logPrgState(prg);
@@ -41,32 +69,30 @@ public class Controller {
             }
         });
 
-        // 2. Prepare the list of callables (tasks)
+        // Prepare the list of callables
         List<Callable<PrgState>> callList = prgList.stream()
                 .map((PrgState p) -> (Callable<PrgState>) (() -> {
                     return p.oneStep();
                 }))
                 .collect(Collectors.toList());
 
-
-        // invokeAll executes the tasks and returns a list of Futures
+        // Start the execution of the callables
         List<PrgState> newPrgList = executor.invokeAll(callList).stream()
                 .map(future -> {
                     try {
                         return future.get();
                     } catch (InterruptedException | ExecutionException e) {
-
                         System.out.println("Error in thread execution: " + e.getMessage());
                         return null;
                     }
                 })
-                .filter(p -> p != null) // Keep only the new threads created by fork
+                .filter(p -> p != null)
                 .collect(Collectors.toList());
 
-        //  Add the newly created threads to the existing list
+        // Add the new created threads to the list of existing threads
         prgList.addAll(newPrgList);
 
-        //  Log the programs after execution
+        // Log after execution
         prgList.forEach(prg -> {
             try {
                 repository.logPrgState(prg);
@@ -75,15 +101,11 @@ public class Controller {
             }
         });
 
-        // Save the current state of the list in the repository
         repository.setPrgList(prgList);
     }
 
-
     public void allStep() throws InterruptedException {
-        executor = Executors.newFixedThreadPool(2); // Create a pool of 2 threads
-
-
+        executor = Executors.newFixedThreadPool(2);
         List<PrgState> prgList = removeCompletedPrg(repository.getPrgList());
 
         while (prgList.size() > 0) {
@@ -93,22 +115,14 @@ public class Controller {
                             prgList.get(0).getHeap().getMap()
                     )
             );
-
-            // Execute one step for all threads
             oneStepForAllPrg(prgList);
-
-            // Remove threads that finished during this step
             prgList = removeCompletedPrg(repository.getPrgList());
         }
-
-        executor.shutdownNow(); // Kill the thread pool
-        repository.setPrgList(prgList); // Update repo one last time
+        executor.shutdownNow();
+        repository.setPrgList(prgList);
     }
 
-
-
-    // New helper to get addresses from ALL symbol tables
-    private List<Integer> getAddrFromAllSymTables(List<PrgState> prgList){
+    private List<Integer> getAddrFromAllSymTables(List<PrgState> prgList) {
         return prgList.stream()
                 .flatMap(p -> getAddrFromSymTable(p.getSymTable().getMap().values()).stream())
                 .collect(Collectors.toList());
@@ -122,7 +136,6 @@ public class Controller {
     }
 
     private Map<Integer, Value> safeGarbageCollector(List<Integer> symTableAddr, Map<Integer, Value> heap) {
-        // This is the conservative garbage collector
         return heap.entrySet().stream()
                 .filter(e -> symTableAddr.contains(e.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));

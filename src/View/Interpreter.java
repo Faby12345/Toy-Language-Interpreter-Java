@@ -1,5 +1,6 @@
 package View;
 
+import Controller.Controller;
 import Exceptions.MyException;
 import Expresions.*;
 import Model.*;
@@ -79,7 +80,7 @@ public class Interpreter {
     // Ref int v; Ref int a; v=10; new(a,22);
 // fork(wH(a,30); v=32; print(v); print(rH(a)));
 // print(v); print(rH(a))
-    private static IStmt exampleConcurrent() {
+    public static IStmt exampleConcurrent() {
         return new CompStmt(
                 new DeclarationStmt("v", new IntType()),
                 new CompStmt(
@@ -118,7 +119,7 @@ public class Interpreter {
     // Ref int v; new(v,20);
 // print(rH(v)); wH(v,30);
 // print(rH(v)+5);
-    private static IStmt exampleHeapWrite() {
+    public static IStmt exampleHeapWrite() {
         return new CompStmt(
                 // Ref int v;
                 new DeclarationStmt("v", new RefType(new IntType())),
@@ -148,7 +149,7 @@ public class Interpreter {
 // Ref Ref int a; new(a,v);
 // new(v,30);
 // print(rH(rH(a)));
-    private static IStmt exampleHeapGC() {
+    public static IStmt exampleHeapGC() {
         return new CompStmt(
                 // Ref int v;
                 new DeclarationStmt("v", new RefType(new IntType())),
@@ -183,7 +184,7 @@ public class Interpreter {
     // Ref int v; new(v,20);
 // Ref Ref int a; new(a,v);
 // print(rH(v)); print(rH(rH(a))+5);
-    private static IStmt exampleHeapReadNested() {
+    public static IStmt exampleHeapReadNested() {
         return new CompStmt(
                 // Ref int v;
                 new DeclarationStmt("v", new RefType(new IntType())),
@@ -218,7 +219,7 @@ public class Interpreter {
         );
     }
 
-    private static IStmt exWhile() {
+    public static IStmt exWhile() {
         return new CompStmt(
                 new DeclarationStmt("v", new IntType()),
                 new CompStmt(
@@ -254,7 +255,7 @@ public class Interpreter {
 
 
     // int v; v=2; print(v)
-    private static IStmt example1() {
+    public static IStmt example1() {
         return new CompStmt(
                 new DeclarationStmt("v", new IntType()),
                 new CompStmt(
@@ -265,7 +266,7 @@ public class Interpreter {
     }
 
     // bool a; int v; a=true; If a Then v=2 Else v=3; print(v)
-    private static IStmt example2() {
+    public static IStmt example2() {
         return new CompStmt(
                 new DeclarationStmt("a", new BoolType()),
                 new CompStmt(
@@ -285,7 +286,7 @@ public class Interpreter {
 
     // string varf; varf="test.in"; openRFile(varf); int varc;
     // readFile(varf, varc); print(varc); readFile(varf, varc); print(varc); closeRFile(varf)
-    private static IStmt exampleFiles() {
+    public static IStmt exampleFiles() {
         return new CompStmt(
                 new DeclarationStmt("varf", new StringType()),
                 new CompStmt(

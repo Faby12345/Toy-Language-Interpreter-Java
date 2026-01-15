@@ -2,8 +2,7 @@ package Model;
 
 import Exceptions.StackEmptyException;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 public class MyStack<T> implements MyIStack<T>{
     private final Deque<T> stack = new ArrayDeque<>();;
@@ -41,5 +40,11 @@ public class MyStack<T> implements MyIStack<T>{
         sb.append("]");
         return sb.toString();
     }
-
+    @Override
+    public List<T> getReversed() {
+        // Create a copy to avoid modifying the original stack
+        List<T> list = new ArrayList<>(stack);
+        Collections.reverse(list);
+        return list;
+    }
 }
