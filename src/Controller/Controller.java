@@ -21,14 +21,15 @@ public class Controller {
         this.repository = repository;
     }
 
-    // --- NEW METHOD FOR GUI: Returns the repository so GUI can read data ---
     public IRepository getRepo() {
         return repository;
     }
 
-    // --- NEW METHOD FOR GUI: Executes exactly ONE step when button is clicked ---
+
     public void oneStep() throws InterruptedException {
         executor = Executors.newFixedThreadPool(2);
+
+
         List<PrgState> prgList = removeCompletedPrg(repository.getPrgList());
 
         if (prgList.size() > 0) {
@@ -40,18 +41,19 @@ public class Controller {
                     )
             );
 
-            // Execute one step
+
             oneStepForAllPrg(prgList);
 
-            // Remove completed programs
-            prgList = removeCompletedPrg(repository.getPrgList());
+
         }
 
         executor.shutdownNow();
+
+
         repository.setPrgList(prgList);
     }
 
-    // --- EXISTING METHODS ---
+
 
     public List<PrgState> removeCompletedPrg(List<PrgState> inPrgList) {
         return inPrgList.stream()
@@ -89,7 +91,7 @@ public class Controller {
                 .filter(p -> p != null)
                 .collect(Collectors.toList());
 
-        // Add the new created threads to the list of existing threads
+
         prgList.addAll(newPrgList);
 
         // Log after execution

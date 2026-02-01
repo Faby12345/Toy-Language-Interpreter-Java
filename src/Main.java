@@ -10,7 +10,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // IMPORTANT: We must specify the folder "View/" because Main is now outside of it.
         FXMLLoader loader = new FXMLLoader(getClass().getResource("View/ProgramChooser.fxml"));
 
         Parent root = loader.load();

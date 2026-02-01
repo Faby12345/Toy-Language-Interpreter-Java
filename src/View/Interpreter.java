@@ -77,6 +77,74 @@ public class Interpreter {
         return new RunBundle(controller, state);
     }
 
+
+
+    public static IStmt repeatUntilEx() {
+        return new CompStmt(
+                new DeclarationStmt("v", new IntType()),
+                new CompStmt(
+                        new DeclarationStmt("x", new IntType()),
+                        new CompStmt(
+                                new DeclarationStmt("y", new IntType()),
+                                new CompStmt(
+                                        new AssigStmt("v", new ValueExp(new IntValue(0))),
+                                        new CompStmt(
+                                                new RepeatUntilStmt(
+                                                        new CompStmt(
+                                                                new ForkStmt(
+                                                                        new CompStmt(
+                                                                                new PrintStmt(new VarExp("v")),
+                                                                                new AssigStmt(
+                                                                                        "v",
+                                                                                        new ArithExp(
+                                                                                                2,
+                                                                                                new VarExp("v"),
+                                                                                                new ValueExp(new IntValue(1))
+                                                                                        )
+                                                                                )
+                                                                        )
+                                                                ),
+                                                                new AssigStmt(
+                                                                        "v",
+                                                                        new ArithExp(
+                                                                                1,
+                                                                                new VarExp("v"),
+                                                                                new ValueExp(new IntValue(1))
+                                                                        )
+                                                                )
+                                                        ),
+                                                        new RelationalExp(
+                                                                "==",
+                                                                new VarExp("v"),
+                                                                new ValueExp(new IntValue(3))
+                                                        )
+                                                ),
+                                                new CompStmt(
+                                                        new AssigStmt("x", new ValueExp(new IntValue(1))),
+                                                        new CompStmt(
+                                                                new NoOpStmt(),
+                                                                new CompStmt(
+                                                                        new AssigStmt("y", new ValueExp(new IntValue(3))),
+                                                                        new CompStmt(
+                                                                                new NoOpStmt(),
+                                                                                new PrintStmt(
+                                                                                        new ArithExp(
+                                                                                                3,
+                                                                                                new VarExp("v"),
+                                                                                                new ValueExp(new IntValue(10))
+                                                                                        )
+                                                                                )
+                                                                        )
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
     // Ref int v; Ref int a; v=10; new(a,22);
 // fork(wH(a,30); v=32; print(v); print(rH(a)));
 // print(v); print(rH(a))

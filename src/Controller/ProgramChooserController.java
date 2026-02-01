@@ -43,7 +43,6 @@ public class ProgramChooserController implements Initializable {
         // 1. Create the list of programs
         List<IStmt> programs = new ArrayList<>();
 
-        // TODO: Copy your example methods (example1, example2, etc.) here or call them from Interpreter
          programs.add(Interpreter.example1());
          programs.add(Interpreter.example2());
          programs.add(Interpreter.exampleFiles());
@@ -52,7 +51,7 @@ public class ProgramChooserController implements Initializable {
          programs.add(Interpreter.exampleHeapGC());
          programs.add(Interpreter.exWhile());
          programs.add(Interpreter.exampleConcurrent());
-
+         programs.add(Interpreter.repeatUntilEx());
 
 
         // 2. Populate the ListView
@@ -108,8 +107,7 @@ public class ProgramChooserController implements Initializable {
             stage.setScene(new Scene(root, 700, 500));
             stage.show();
 
-            // Optional: Close the Chooser window
-            // ((Node)(event.getSource())).getScene().getWindow().hide();
+
 
         } catch (IOException | RuntimeException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);

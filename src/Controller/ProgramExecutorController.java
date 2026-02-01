@@ -68,27 +68,26 @@ public class ProgramExecutorController {
 
     @FXML
     public void initialize() {
-        // 1. Setup Heap Table Columns
-        // Maps the "Key" of the heap entry to the first column
+
         addressColumn.setCellValueFactory(p -> new SimpleIntegerProperty(p.getValue().getKey()).asObject());
         // Maps the "Value" of the heap entry to the second column
         valueColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
 
-        // 2. Setup Symbol Table Columns
+        //  Setup Symbol Table Columns
         varNameColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getKey()));
         varValueColumn.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().toString()));
 
-        // 3. Listener: When user clicks a different ID, update the SymTable & Stack for that thread
+        //  Listener: When user clicks a different ID, update the SymTable & Stack for that thread
         prgStateIdentifiersListView.setOnMouseClicked(this::changePrgState);
     }
 
-    // Called from ProgramChooserController to pass the backend controller
+
     public void setController(Controller controller) {
         this.controller = controller;
         populate(); // Initial population of data
     }
 
-    // --- EVENT HANDLERS ---
+
 
     @FXML
     public void runOneStep(ActionEvent event) {
@@ -99,10 +98,8 @@ public class ProgramExecutorController {
         }
 
         try {
-            // Call the ONE STEP method you created in the backend
-            controller.oneStep();
 
-            // Refresh all tables/lists after the step
+            controller.oneStep();
             populate();
 
         } catch (Exception e) {
@@ -115,8 +112,6 @@ public class ProgramExecutorController {
         populateSymTableAndExeStack();
     }
 
-    // --- POPULATION LOGIC ---
-
     private void populate() {
         populateHeap();
         populateProgramStateIdentifiers();
@@ -126,7 +121,7 @@ public class ProgramExecutorController {
     }
 
     private void populateHeap() {
-        // Heap is SHARED. We can take it from the first available state.
+
         if (controller.getRepo().getPrgList().size() > 0) {
             Map<Integer, Value> heap = controller.getRepo().getPrgList().get(0).getHeap().getMap();
             List<Map.Entry<Integer, Value>> heapList = new ArrayList<>(heap.entrySet());
@@ -138,24 +133,20 @@ public class ProgramExecutorController {
     private void populateProgramStateIdentifiers() {
         List<PrgState> prgStates = controller.getRepo().getPrgList();
 
-        // Update the list of IDs
         List<Integer> idList = prgStates.stream()
                 .map(PrgState::getId)
                 .collect(Collectors.toList());
         prgStateIdentifiersListView.setItems(FXCollections.observableArrayList(idList));
 
-        // Update the text field count
+
         numberOfPrgStatesTextField.setText(String.valueOf(prgStates.size()));
     }
 
     private void populateFileTable() {
-        // 1. Check if we have any program states
+
         if (controller.getRepo().getPrgList().size() > 0) {
 
-            // 2. Get the map. Note the type is <StringValue, BufferedReader>
             Map<StringValue, BufferedReader> filesMap = controller.getRepo().getPrgList().get(0).getFileTable().getContent();
-
-            // 3. Create a list of Strings for the GUI
             List<String> fileList = new ArrayList<>();
 
             // 4. Iterate over the keys (which are StringValue objects) and convert them to String
