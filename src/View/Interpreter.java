@@ -77,6 +77,43 @@ public class Interpreter {
         return new RunBundle(controller, state);
     }
 
+    public static IStmt ForStmtEx(){
+        return new CompStmt(
+                new DeclarationStmt("a", new RefType(new IntType())),
+                new CompStmt(
+                        new HeapAlloc("a", new ValueExp(new IntValue(20))),
+                        new CompStmt(
+                                new ForStmt(
+                                        "v",
+                                        new ValueExp(new IntValue(0)),                 // v = 0
+                                        new ValueExp(new IntValue(1)),                 // v = v + 1
+                                        new RelationalExp(                             // v < 3
+                                                "<",
+                                                new VarExp("v"),
+                                                new ValueExp(new IntValue(3))
+                                        ),
+                                        new ForkStmt(
+                                                new CompStmt(
+                                                        new PrintStmt(new VarExp("v")),
+                                                        new AssigStmt(
+                                                                "v",
+                                                                new ArithExp(
+                                                                        3,
+                                                                        new VarExp("v"),
+                                                                        new HeapRead(new VarExp("a"))
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                ),
+                                new PrintStmt(
+                                        new HeapRead(new VarExp("a"))
+                                )
+                        )
+                )
+        );
+    }
+
     public static IStmt ConditionalAssigEx(){
         return new CompStmt(
                 new DeclarationStmt("a", new RefType(new IntType())),
