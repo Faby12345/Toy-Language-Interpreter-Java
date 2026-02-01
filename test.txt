@@ -1,6 +1,6 @@
 Id: 1
 ExeStack:
-[int v;int x;int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) a;Ref(int) b;int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
 {}
 Out:
@@ -12,7 +12,7 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int v | int x;int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) a | Ref(int) b;int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
 {}
 Out:
@@ -24,7 +24,7 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int v | int x;int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) a | Ref(int) b;int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
 {}
 Out:
@@ -36,9 +36,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int x;int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) b;int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0}
+{a=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -48,9 +48,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int x;int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) b;int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0}
+{a=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -60,9 +60,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int x | int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) b | int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0}
+{a=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -72,9 +72,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int x | int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Ref(int) b | int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0}
+{a=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -84,9 +84,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0}
+{a=Ref(0, int), b=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -96,9 +96,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int y;v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[int v;new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0}
+{a=Ref(0, int), b=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -108,9 +108,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int y | v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[int v | new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0}
+{a=Ref(0, int), b=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -120,9 +120,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[int y | v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[int v | new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0}
+{a=Ref(0, int), b=Ref(0, int)}
 Out:
 []
 FileTable:
@@ -132,9 +132,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(0, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
@@ -144,9 +144,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[v=0;Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(a, 0);new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(0, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
@@ -156,9 +156,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[v=0 | Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(a, 0) | new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(0, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
@@ -168,9 +168,9 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[v=0 | Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(a, 0) | new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(0, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
@@ -180,817 +180,325 @@ Heap:
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3);x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(b, 0);wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(b, 0) | wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[Repeat{ fork(Print(v);v=(v - 1));v=(v + 1)} Until(v==3) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[new(b, 0) | wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(0, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1));v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, 2 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1));v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[wH(a, 1);wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, 2 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1)) | v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[wH(a, 1) | wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, 2 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1)) | v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[wH(a, 1) | wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 0, 2 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 0, }
 ------------------------------------------------------
-Id: 2
+Id: 1
 ExeStack:
-[Print(v);v=(v - 1)]
+[wH(b, 2);(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[wH(b, 2) | (rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 0, }
 ------------------------------------------------------
-Id: 2
+Id: 1
 ExeStack:
-[Print(v);v=(v - 1)]
+[wH(b, 2) | (rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 0, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=1, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
-Id: 2
+Id: 1
 ExeStack:
-[Print(v) | v=(v - 1)]
+[(rH(a)<rH(b))? 100 : 200;Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[(rH(a)<rH(b))? 100 : 200 | Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=1, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
-Id: 2
+Id: 1
 ExeStack:
-[Print(v) | v=(v - 1)]
+[(rH(a)<rH(b))? 100 : 200 | Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=0, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=0}
 Out:
 []
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1));v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=1, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 2
-ExeStack:
-[v=(v - 1)]
-SymTable:
-{v=0, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[fork(Print(v);v=(v - 1));v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 2
-ExeStack:
-[v=(v - 1)]
-SymTable:
-{v=0, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[fork(Print(v);v=(v - 1)) | v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 2
-ExeStack:
 []
-SymTable:
-{v=-1, x=0, y=0}
-Out:
-[0]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1)) | v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Print(v);((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=1, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
-[Print(v);v=(v - 1)]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
-[Print(v);v=(v - 1)]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
-[Print(v) | v=(v - 1)]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
-[Print(v) | v=(v - 1)]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[fork(Print(v);v=(v - 1));v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
-[v=(v - 1)]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[fork(Print(v);v=(v - 1));v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
-[v=(v - 1)]
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[fork(Print(v);v=(v - 1)) | v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 3
-ExeStack:
 []
-SymTable:
-{v=0, x=0, y=0}
-Out:
-[0, 1]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[fork(Print(v);v=(v - 1)) | v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
+[Print(v) | ((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=2, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
-[Print(v);v=(v - 1)]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[v=(v + 1) | while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
-[Print(v);v=(v - 1)]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
-[Print(v) | v=(v - 1)]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[while(!(v==3)) fork(Print(v);v=(v - 1));v=(v + 1) | x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
-[Print(v) | v=(v - 1)]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=0, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
-[v=(v - 1)]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[x=1;NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=0, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
-[v=(v - 1)]
-SymTable:
-{v=2, x=0, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[x=1 | NoOp;y=3;NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=0, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 4
-ExeStack:
 []
-SymTable:
-{v=1, x=0, y=0}
-Out:
-[0, 1, 2]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[x=1 | NoOp;y=3;NoOp;Print((v * 10))]
+[Print(v) | ((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=3, x=0, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0, 1, 2]
+[]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[NoOp;y=3;NoOp;Print((v * 10))]
+[((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=3, x=1, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0, 1, 2]
+[100]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[NoOp;y=3;NoOp;Print((v * 10))]
+[((rH(b) - 2)>rH(a))? 100 : 200;Print(v)]
 SymTable:
-{v=3, x=1, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0, 1, 2]
+[100]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[NoOp | y=3;NoOp;Print((v * 10))]
+[((rH(b) - 2)>rH(a))? 100 : 200 | Print(v)]
 SymTable:
-{v=3, x=1, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0, 1, 2]
+[100]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[NoOp | y=3;NoOp;Print((v * 10))]
+[((rH(b) - 2)>rH(a))? 100 : 200 | Print(v)]
 SymTable:
-{v=3, x=1, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=100}
 Out:
-[0, 1, 2]
+[100]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[y=3;NoOp;Print((v * 10))]
+[Print(v)]
 SymTable:
-{v=3, x=1, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=200}
 Out:
-[0, 1, 2]
+[100]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
-[y=3;NoOp;Print((v * 10))]
+[Print(v)]
 SymTable:
-{v=3, x=1, y=0}
+{a=Ref(1, int), b=Ref(2, int), v=200}
 Out:
-[0, 1, 2]
+[100]
 FileTable:
 {}
 Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[y=3 | NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=1, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[y=3 | NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=1, y=0}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=1, y=3}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[NoOp;Print((v * 10))]
-SymTable:
-{v=3, x=1, y=3}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[NoOp | Print((v * 10))]
-SymTable:
-{v=3, x=1, y=3}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[NoOp | Print((v * 10))]
-SymTable:
-{v=3, x=1, y=3}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[Print((v * 10))]
-SymTable:
-{v=3, x=1, y=3}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
-------------------------------------------------------
-Id: 1
-ExeStack:
-[Print((v * 10))]
-SymTable:
-{v=3, x=1, y=3}
-Out:
-[0, 1, 2]
-FileTable:
-{}
-Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------
 Id: 1
 ExeStack:
 []
 SymTable:
-{v=3, x=1, y=3}
+{a=Ref(1, int), b=Ref(2, int), v=200}
 Out:
-[0, 1, 2, 30]
+[100, 200]
 FileTable:
 {}
 Heap:
-{}
+{1 -> 1, 2 -> 2, }
 ------------------------------------------------------

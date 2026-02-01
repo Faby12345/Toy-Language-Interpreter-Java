@@ -52,6 +52,7 @@ public class ProgramChooserController implements Initializable {
          programs.add(Interpreter.exWhile());
          programs.add(Interpreter.exampleConcurrent());
          programs.add(Interpreter.repeatUntilEx());
+        programs.add(Interpreter.ConditionalAssigEx());
 
 
         // 2. Populate the ListView

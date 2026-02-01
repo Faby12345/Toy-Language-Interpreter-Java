@@ -77,7 +77,41 @@ public class Interpreter {
         return new RunBundle(controller, state);
     }
 
+    public static IStmt ConditionalAssigEx(){
+        return new CompStmt(
+                new DeclarationStmt("a", new RefType(new IntType())),
+                new CompStmt(
+                        new DeclarationStmt("b", new RefType(new IntType())),
+                        new CompStmt(
+                                new DeclarationStmt("v", new IntType()),
+                                new CompStmt(
+                                        new HeapAlloc("a", new ValueExp(new IntValue(0))),
+                                        new CompStmt(
+                                                new HeapAlloc("b", new ValueExp(new IntValue(0))),
+                                                new CompStmt(
+                                                        new HeapWrite("a", new ValueExp(new IntValue(1))),
+                                                        new CompStmt(
+                                                                new HeapWrite("b", new ValueExp(new IntValue(2))),
+                                                                new CompStmt(
+                                                                        new CondAssigStmt("v", new RelationalExp("<", new HeapRead(new VarExp("a")) ,new HeapRead(new VarExp("b"))), new ValueExp(new IntValue(100)), new ValueExp(new IntValue(200))),
+                                                                        new CompStmt(
+                                                                                new PrintStmt(new VarExp("v")),
+                                                                                new CompStmt(
+                                                                                        new CondAssigStmt("v", new RelationalExp(">", new ArithExp(2, new HeapRead(new VarExp("b")), new ValueExp(new IntValue(2))), new HeapRead(new VarExp("a"))), new ValueExp(new IntValue(100)), new ValueExp(new IntValue(200))),
+                                                                                        new PrintStmt(new VarExp("v"))
+                                                                                )
+                                                                        )
+                                                                        )
 
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+
+                )
+        );
+    }
 
     public static IStmt repeatUntilEx() {
         return new CompStmt(
